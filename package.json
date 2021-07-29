@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/vecel/to-do-list/issues"
   },
-  "homepage": "https://github.com/vecel/to-do-list#readme"
+  "homepage": "https://github.com/vecel/to-do-list#readme",
+  "devDependencies": {
+    "webpack": "^5.47.0",
+    "webpack-cli": "^4.7.2"
+  }
 }
