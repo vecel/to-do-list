@@ -10,8 +10,22 @@ export const DOMMainPageLoader = (() => {
     const _makeListButton = (title) => {
         const container = document.createElement('div');
         container.classList.add('list-selection');
-        container.textContent = title;
+        container.appendChild(_addTitleSpan(title));
+        container.appendChild(_addHorizontalLineSeparator());
         return container;
+    }
+
+    const _addTitleSpan = (title) => {
+        const titleSpan = document.createElement('span')
+        titleSpan.classList.add('list-title');
+        titleSpan.textContent = title;
+        return titleSpan;
+    }
+
+    const _addHorizontalLineSeparator = () => {
+        const line = document.createElement('div');
+        line.classList.add('horizontal-line');
+        return line;
     }
 
     const _getListsFromLocalStorage = () => JSON.parse(localStorage.getItem('lists'));
