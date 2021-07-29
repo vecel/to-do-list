@@ -30,7 +30,7 @@ export const DOMMainPageLoader = (() => {
         buttonConatiner.classList.add('list-selection');
         buttonConatiner.classList.add('center-content');
         buttonConatiner.id = 'new-list';
-        buttonConatiner.textContent = 'Add new list'; // replace with plus svg
+        buttonConatiner.innerHTML = '<span class="material-icons-outlined font-4em">add</span>'
         
         return buttonConatiner;
     }
