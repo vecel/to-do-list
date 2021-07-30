@@ -1,3 +1,4 @@
+import './style.css';
 import { DOMMainPageLoader } from './page-loader';
 
 // test objects
