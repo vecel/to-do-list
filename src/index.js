@@ -16,6 +16,7 @@ const openList = (event) => {
     const id = getElementIndex(event.target);
     const lists = LocalStorageManager.getListsArray();
     console.log(lists[id]);
+    window.open('tasks.html');
     // link to second html file
 }
 
