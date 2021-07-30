@@ -1,3 +1,5 @@
+import { STORAGE_LISTS_KEY } from "./constants";
+
 HTMLElement.prototype.appendChildren = function(elements) {
     for (let i = 0; i < elements.length; ++i) {
         this.appendChild(elements[i]);
@@ -34,13 +36,15 @@ export const DOMMainPageLoader = (() => {
         return line;
     }
 
-    const _getListsFromLocalStorage = () => JSON.parse(localStorage.getItem('lists'));
+    const _getListsFromLocalStorage = () => JSON.parse(localStorage.getItem(STORAGE_LISTS_KEY));
 
     const _getListElementsArray = () => {
         const lists = _getListsFromLocalStorage();
         let listElements = [];
-        for (let i = 0; i < lists.length; ++i) {
-            listElements.push(_makeListCard(lists[i].title));
+        if (lists !== null) {
+            for (let i = 0; i < lists.length; ++i) {
+                listElements.push(_makeListCard(lists[i].title));
+            }
         }
         return listElements;
     }
