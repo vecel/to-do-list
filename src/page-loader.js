@@ -14,6 +14,12 @@ export const DOMMainPageLoader = (() => {
         pageContent.appendChild(_makeAddListButton());   
     }
 
+    const pushNewListCard = (title) => {
+        const newList = _makeListCard(title);
+        const addListDiv = pageContent.querySelector('div#new-list');
+        pageContent.insertBefore(newList, addListDiv);
+    }
+
     const _makeListCard = (title) => {
         const container = document.createElement('div');
         container.classList.add('task-list');
@@ -41,11 +47,10 @@ export const DOMMainPageLoader = (() => {
     const _getListElementsArray = () => {
         const lists = _getListsFromLocalStorage();
         let listElements = [];
-        if (lists !== null) {
             for (let i = 0; i < lists.length; ++i) {
-                listElements.push(_makeListCard(lists[i].title));
-            }
+            listElements.push(_makeListCard(lists[i].title));
         }
+        
         return listElements;
     }
 
@@ -61,5 +66,6 @@ export const DOMMainPageLoader = (() => {
 
     return {
         load,
+        pushNewListCard,
     }
 })();
