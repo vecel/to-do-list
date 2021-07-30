@@ -1,6 +1,6 @@
 const listPrototype = {
     listCounter: 0,
-    setListTitle (title) {
+    setTitle (title) {
         this.title = title;
     },
     incrementListCounter () { 
@@ -19,6 +19,28 @@ const ListFactory = () => {
     return object;
 }
 
+const listItemPrototype = {
+    setTitle (title) {
+        this.title = title;
+    },
+    setPriority (priority) {
+        this.priority = priority;
+    },
+    setDueDate (date) {
+        this.date = date;
+    },
+}
+
+const ListItemFactory = () => {
+    let object = Object.create(listItemPrototype);
+    object.title = '';
+    object.done = false;
+    object.priority = 0;
+    object.dueDate = null;
+    return object;
+}
+
 export {
     ListFactory,
+    ListItemFactory,
 }
