@@ -1,4 +1,5 @@
-import { STORAGE_LISTS_KEY } from "./constants";
+// import { STORAGE_LISTS_KEY } from "./constants";
+import { LocalStorageManager } from './storage-manager';
 
 HTMLElement.prototype.appendChildren = function(elements) {
     for (let i = 0; i < elements.length; ++i) {
@@ -18,6 +19,7 @@ export const DOMMainPageLoader = (() => {
         const newList = _makeListCard(title);
         const addListDiv = pageContent.querySelector('div#new-list');
         pageContent.insertBefore(newList, addListDiv);
+        return newList;
     }
 
     const _makeListCard = (title) => {
@@ -42,10 +44,8 @@ export const DOMMainPageLoader = (() => {
         return line;
     }
 
-    const _getListsFromLocalStorage = () => JSON.parse(localStorage.getItem(STORAGE_LISTS_KEY));
-
     const _getListElementsArray = () => {
-        const lists = _getListsFromLocalStorage();
+        const lists = LocalStorageManager.getListsArray();
         let listElements = [];
             for (let i = 0; i < lists.length; ++i) {
             listElements.push(_makeListCard(lists[i].title));
