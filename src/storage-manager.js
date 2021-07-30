@@ -10,7 +10,6 @@ export const LocalStorageManager = (() => {
         let lists = JSON.parse(localStorage.getItem(STORAGE_LISTS_KEY));
         lists.push(newList);
         localStorage.setItem(STORAGE_LISTS_KEY, JSON.stringify(lists));
-        console.log(lists);
     }
 
     const getListsArray = () => {

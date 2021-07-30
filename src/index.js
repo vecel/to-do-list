@@ -7,14 +7,16 @@ LocalStorageManager.initLists();
 DOMMainPageLoader.load();
 
 const addNewList = () => {
-    console.log('new list');
     let list = ListFactory();
     LocalStorageManager.addList(list);
     DOMMainPageLoader.pushNewListCard(list.title).addEventListener('click', openList);
 }
 
-const openList = (listTitle) => {
-    console.log(listTitle);
+const openList = (event) => {
+    const id = getElementIndex(event.target);
+    const lists = LocalStorageManager.getListsArray();
+    console.log(lists[id]);
+    // link to second html file
 }
 
 const listCards = document.querySelectorAll('div.list-card');
@@ -24,3 +26,10 @@ for (let listCard of listCards) {
     listCard.addEventListener('click', openList);
 }
 newListCardButton.addEventListener('click', addNewList);
+
+
+
+function getElementIndex(element) {
+    const parent = element.parentNode;
+    return Array.prototype.indexOf.call(parent.children, element);
+}
