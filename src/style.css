@@ -33,7 +33,7 @@ main {
     background-color: black;
 }
 
-div.list-selection {
+div.task-list {
     width: 240px;
     height: 240px;
     margin: 24px;

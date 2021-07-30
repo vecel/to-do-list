@@ -7,9 +7,14 @@ HTMLElement.prototype.appendChildren = function(elements) {
 export const DOMMainPageLoader = (() => {
     const pageContent = document.querySelector('main');
 
+    const load = () => {
+        pageContent.appendChildren(_getListElementsArray());
+        pageContent.appendChild(_makeAddListButton());   
+    }
+
     const _makeListButton = (title) => {
         const container = document.createElement('div');
-        container.classList.add('list-selection');
+        container.classList.add('task-list');
         container.appendChild(_addTitleSpan(title));
         container.appendChild(_addHorizontalLineSeparator());
         return container;
@@ -41,20 +46,12 @@ export const DOMMainPageLoader = (() => {
 
     const _makeAddListButton = () => {
         const buttonConatiner = document.createElement('div');
-        buttonConatiner.classList.add('list-selection');
+        buttonConatiner.classList.add('task-list');
         buttonConatiner.classList.add('center-content');
         buttonConatiner.id = 'new-list';
         buttonConatiner.innerHTML = '<span class="material-icons-outlined font-4em">add</span>'
         
         return buttonConatiner;
-    }
-
-    const load = () => {
-        console.log('loading here');
-        console.log(_getListsFromLocalStorage());
-        pageContent.appendChildren(_getListElementsArray());
-        pageContent.appendChild(_makeAddListButton());
-        
     }
 
     return {
