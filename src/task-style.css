@@ -116,4 +116,5 @@ button.details-button {
     background-color: transparent;
     border: 2px solid black;
     border-radius: 6px;
+    cursor: pointer;
 }
