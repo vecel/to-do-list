@@ -1,0 +1,55 @@
+html, body {
+    min-height: 100vh;
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    margin: 0 12px;
+    border: 2px solid yellow;
+    /* -webkit-appearance: none; */
+}
+
+input[type="text"] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    height: 32px;
+    width: 60%;
+    /* margin: 0 12px */
+}
+
+.font-2em {
+    font-size: 2em;
+}
+
+.task-container {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    width: 700px;
+    background-color: #777;
+    margin: 6px 0;
+    border-left: 12px solid red;
+}
+
+.task-info {
+
+}
+
+#new-task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 6px;
+}
