@@ -2,6 +2,7 @@ import './style.css';
 import { DOMMainPageLoader } from './page-loader';
 import { ListFactory, ListItemFactory } from './factories';
 import { LocalStorageManager } from './storage-manager';
+import { URL_ID_PARAMETER_NAME } from './constants';
 
 LocalStorageManager.initLists();
 DOMMainPageLoader.load();
@@ -17,7 +18,9 @@ const openList = (event) => {
     const lists = LocalStorageManager.getListsArray();
     console.log(lists[id]);
 
-    let taskWindow = window.open('tasks.html?', '_self');
+    const url = `tasks.html?${URL_ID_PARAMETER_NAME}=${id}`;
+    const target = '_self';
+    let taskWindow = window.open(url, target);
     
 }
 
