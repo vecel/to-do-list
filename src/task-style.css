@@ -10,42 +10,106 @@ main {
     align-items: center;
 }
 
-input[type="checkbox"] {
-    width: 24px;
-    height: 24px;
+.checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+}
+
+label.checkbox-container {
+    display: block;
     margin: 0 12px;
-    border: 2px solid yellow;
-    /* -webkit-appearance: none; */
+}
+
+.checkmark {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checkbox-container:hover .checkmark {
+    background-color: #eee;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: orange;
+}
+
+.checkmark::after {
+    content: "";
+    position: relative;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark::after {
+    left: 6px;
+    top: 3px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+label.title-input {
+    margin-right: 12px;
 }
 
 input[type="text"] {
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid #333;
     height: 32px;
     width: 60%;
-    /* margin: 0 12px */
+    font-size: 1em;
+    flex-grow: 1;
 }
 
 .font-2em {
     font-size: 2em;
 }
 
-.task-container {
-    display: flex;
-    align-items: center;
-    height: 64px;
+.task-info {
+    display: grid;
+    grid-template-columns: 44px 1fr 112px 48px;
+    height: 48px;
     width: 700px;
     background-color: #777;
     margin: 6px 0;
     border-left: 12px solid red;
 }
 
-.task-info {
+button.details-button {
+    background-color: transparent;
+    border: none;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    margin: 6px;
+}
 
+.task-info label, div, button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #new-task {
+    height: 48px;
+    width: 700px;
     display: flex;
     justify-content: center;
     align-items: center;

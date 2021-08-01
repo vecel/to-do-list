@@ -59,7 +59,7 @@ export const DOMMainPageLoader = (() => {
         buttonConatiner.classList.add('task-list');
         buttonConatiner.classList.add('center-content');
         buttonConatiner.id = 'new-list';
-        buttonConatiner.innerHTML = '<span class="material-icons-outlined font-4em">add</span>'
+        buttonConatiner.innerHTML = '<span class="material-icons-outlined font-4em">add</span>';
         
         return buttonConatiner;
     }
@@ -70,6 +70,89 @@ export const DOMMainPageLoader = (() => {
     }
 })();
 
-export const DOMTaskListPageLoader = (() => {
+export const DOMTaskListLoader = (() => {
+    const pageContent = document.querySelector('main');
     
+    const load = () => {
+        pageContent.appendChild(_makeTaskElement());
+        pageContent.appendChild(_makeTaskElement());
+        pageContent.appendChild(_makeAddTaskButtom());
+    }
+
+    const _loadTaskList = () => {
+
+    }
+
+    const _makeTaskElement = () => {
+        const taskElementContainer = document.createElement('div');   
+        taskElementContainer.classList.add('task-container');
+        taskElementContainer.appendChild(_makeTaskShortInfo());
+        return taskElementContainer;
+    }
+
+    const _makeTaskShortInfo = () => {
+        const shortInfoContainer = document.createElement('div');
+        // shortInfoContainer.classList.add('task-container');
+        shortInfoContainer.classList.add('task-info');
+        // append children: checkbox, title input, dateDiv, burgerButton
+        shortInfoContainer.appendChild(_makeCheckbox());
+        shortInfoContainer.appendChild(_makeTitleInput());
+        shortInfoContainer.appendChild(_makeDateDisplay());
+        shortInfoContainer.appendChild(_makeDetailsButton());
+        return shortInfoContainer;
+    }
+
+    const _makeCheckbox = () => {
+        const checkboxWrapper = document.createElement('label');
+        checkboxWrapper.classList.add('checkbox-container');
+
+        const checkbox = document.createElement('input');
+        checkbox.classList.add('checkbox');
+        checkbox.type = 'checkbox';
+
+        const checkmark = document.createElement('span');
+        checkmark.classList.add('checkmark');
+
+        checkboxWrapper.appendChild(checkbox);
+        checkboxWrapper.appendChild(checkmark);
+
+        return checkboxWrapper;
+    }
+
+    const _makeTitleInput = () => {
+        const titleWrapper = document.createElement('label');
+        titleWrapper.classList.add('title-input');
+
+        const titleInput = document.createElement('input');
+        titleInput.type = 'text';
+        
+        titleWrapper.appendChild(titleInput);
+
+        return titleWrapper;
+    }
+
+    const _makeDateDisplay = () => {
+        const dateDisplay = document.createElement('div');
+        dateDisplay.classList.add('date-display');
+        dateDisplay.textContent = '';
+        return dateDisplay;
+    }
+
+    const _makeDetailsButton = () => {
+        const button = document.createElement('button');
+        button.classList.add('details-button');
+        button.innerHTML = '<span class="material-icons-outlined">menu</span>';
+        return button;
+    }
+
+    const _makeAddTaskButtom = () => {
+        const newTaskContainer = document.createElement('div');
+        newTaskContainer.id = 'new-task';
+        newTaskContainer.innerHTML = '<span class="material-icons-outlined font-2em">add</span>';
+        return newTaskContainer;
+    }
+
+    return {
+        load,
+    }
 })();
