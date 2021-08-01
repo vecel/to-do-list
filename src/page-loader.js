@@ -73,17 +73,33 @@ export const DOMMainPageLoader = (() => {
 export const DOMTaskListLoader = (() => {
     const pageContent = document.querySelector('main');
     
-    const load = () => {
-        pageContent.appendChild(_makeTaskElement());
-        pageContent.appendChild(_makeTaskElement());
+    const load = (listId) => {
+        // const taskList = LocalStorageManager.getTaskListByListId(listId);
+        pageContent.appendChildren(_loadTaskListElements(listId));
         pageContent.appendChild(_makeAddTaskButtom());
     }
 
-    const _loadTaskList = () => {
-
+    const addTask = () => {
+        const newTaskButton = document.querySelector('div#new-task');
+        pageContent.insertBefore(_makeEmptyTaskElement(), newTaskButton);
     }
 
-    const _makeTaskElement = () => {
+    const _loadTaskListElements = (listId) => {
+        const taskList = LocalStorageManager.getTaskListByListId(listId);
+        let taskElements = [];
+        for (let i = 0; i < taskList.length; ++i) {
+            taskElements.push(_makeFilledTaskElement(taskList[i]));
+        }
+        return taskElements;
+    }
+
+    const _makeFilledTaskElement = (taskObject) => {
+        const taskElement = _makeEmptyTaskElement();
+        taskElement.querySelector('.task-container .task-info .title-input input').value = taskObject.title;
+        return taskElement;
+    }
+
+    const _makeEmptyTaskElement = () => {
         const taskElementContainer = document.createElement('div');   
         taskElementContainer.classList.add('task-container');
         taskElementContainer.appendChild(_makeTaskShortInfo());
@@ -154,5 +170,6 @@ export const DOMTaskListLoader = (() => {
 
     return {
         load,
+        addTask,
     }
 })();
