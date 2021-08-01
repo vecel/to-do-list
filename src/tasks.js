@@ -1,6 +1,10 @@
 import { URL_ID_PARAMETER_NAME } from './constants';
+import { LocalStorageManager } from './storage-manager';
+
+const listId = getListIdFromUrl();
 
 console.log('list id: ' + getListIdFromUrl());
+console.log(LocalStorageManager.getTaskListByListId(listId));
 
 function getListIdFromUrl() {
     const queryString = window.location.search;

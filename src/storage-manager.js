@@ -33,11 +33,29 @@ export const LocalStorageManager = (() => {
         localStorage.setItem(CREATED_LISTS_NUMBER_KEY, JSON.stringify(listsNumber + 1));
     }
 
+    const initTaskList = (listKey) => {
+        localStorage.setItem(listKey, JSON.stringify([]));
+    }
+
+    const getTaskListByKey = (listKey) => {
+        return JSON.parse(localStorage.getItem(listKey));
+    }
+
+    const getTaskListByListId = (listId) => {
+        const listArray = getListsArray();
+        const list = listArray[listId];
+        const taskListKey = list.storageTaskListKey;
+        return JSON.parse(localStorage.getItem(taskListKey));
+    }
+
     return {
         initLists,
         addList,
         getListsArray,
         getCreatedListsNumber,
         incrementCreatedListsNumber,
+        initTaskList,
+        getTaskListByKey,
+        getTaskListByListId,
     }
 })();

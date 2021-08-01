@@ -10,6 +10,7 @@ DOMMainPageLoader.load();
 const addNewList = () => {
     let list = ListFactory();
     LocalStorageManager.addList(list);
+    LocalStorageManager.initTaskList(list.storageTaskListKey);
     DOMMainPageLoader.pushNewListCard(list.title).addEventListener('click', openList);
 }
 
