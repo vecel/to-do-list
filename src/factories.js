@@ -1,19 +1,17 @@
+import { LocalStorageManager } from "./storage-manager";
+
 const listPrototype = {
-    listCounter: 0,
     setTitle (title) {
         this.title = title;
-    },
-    incrementListCounter () { 
-        listPrototype.listCounter++; 
     },
 }
 
 const ListFactory = () => {
     let object = Object.create(listPrototype);
-    object.title = `List ${object.listCounter}`;
-    object.storageTaskListKey = `key${object.listCounter}`;
+    object.title = `To Do List`;
+    object.storageTaskListKey = `key${LocalStorageManager.getCreatedListsNumber()}`;
 
-    listPrototype.incrementListCounter();
+    LocalStorageManager.incrementCreatedListsNumber();
 
     return object;
 }
