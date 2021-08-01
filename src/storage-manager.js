@@ -42,10 +42,21 @@ export const LocalStorageManager = (() => {
     }
 
     const getTaskListByListId = (listId) => {
+        const listKey = getTaskListKey(listId);
+        return JSON.parse(localStorage.getItem(listKey));
+    }
+
+    const addTask = (listKey, taskItem) => {
+        let taskArray = JSON.parse(localStorage.getItem(listKey));
+        taskArray.push(taskItem);
+        localStorage.setItem(listKey, JSON.stringify(taskArray));
+        console.log(taskArray);
+    }
+
+    const getTaskListKey = (listId) => {
         const listArray = getListsArray();
         const list = listArray[listId];
-        const taskListKey = list.storageTaskListKey;
-        return JSON.parse(localStorage.getItem(taskListKey));
+        return list.storageTaskListKey;
     }
 
     return {
@@ -57,5 +68,7 @@ export const LocalStorageManager = (() => {
         initTaskList,
         getTaskListByKey,
         getTaskListByListId,
+        addTask,
+        getTaskListKey,
     }
 })();
