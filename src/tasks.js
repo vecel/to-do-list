@@ -1,1 +1,1 @@
-console.log('Tasks lets goooo');
+console.log(window.taskList);

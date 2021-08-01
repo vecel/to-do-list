@@ -69,3 +69,7 @@ export const DOMMainPageLoader = (() => {
         pushNewListCard,
     }
 })();
+
+export const DOMTaskListPageLoader = (() => {
+    
+})();
