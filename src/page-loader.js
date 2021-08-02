@@ -79,11 +79,9 @@ export const DOMTaskListLoader = (() => {
     }
 
     const renderTaskList = (taskList) => {
-        // const addTaskButton = pageContent.querySelector('div#new-task');
         pageContent.innerHTML = ''; // remove children
         for (let i = 0; i < taskList.length; ++i) {
             const element = _renderFilledTaskListElement(taskList[i]);
-            // pageContent.insertBefore(element, addTaskButton);
             pageContent.appendChild(element);
         }
         pageContent.appendChild(_makeAddTaskButtom());

@@ -53,6 +53,10 @@ export const LocalStorageManager = (() => {
         console.log(taskArray);
     }
 
+    const updateTaskList = (listKey, taskList) => {
+        localStorage.setItem(listKey, JSON.stringify(taskList));
+    }
+
     const getTaskListKey = (listId) => {
         const listArray = getListsArray();
         const list = listArray[listId];
@@ -70,5 +74,6 @@ export const LocalStorageManager = (() => {
         getTaskListByListId,
         addTask,
         getTaskListKey,
+        updateTaskList,
     }
 })();
