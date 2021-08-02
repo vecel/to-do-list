@@ -71,35 +71,53 @@ export const DOMMainPageLoader = (() => {
 })();
 
 export const DOMTaskListLoader = (() => {
+    const NEW_TASK_ID = 'new-task';
     const pageContent = document.querySelector('main');
 
-    const addTask = () => {
-        const newTaskButton = document.querySelector('div#new-task');
-        pageContent.insertBefore(_makeEmptyTaskElement(), newTaskButton);
+    const load = (taskList) => {
+        pageContent.appendChild(_makeAddTaskButtom());
+        pageContent.appendChildren(_makeTaskElementsArray(taskList));
+    }
+
+    const addTask = (taskId) => {
+        const newTaskButton = document.querySelector(`div#${NEW_TASK_ID}`);
+        pageContent.insertBefore(_makeEmptyTaskElement(taskId), newTaskButton);
     }
 
     const renderTaskList = (taskList) => {
-        pageContent.innerHTML = ''; // remove children
-        for (let i = 0; i < taskList.length; ++i) {
-            const element = _renderFilledTaskListElement(taskList[i]);
-            pageContent.appendChild(element);
+        let taskElements = _getTaskElementsArray();
+        for (let i = 0; i < taskElements.length; ++i) {
+            const elementId = parseInt(taskElements[i].id);
+            if (taskElements[i].id === NEW_TASK_ID) continue;
+            const order = taskList.findIndex(task => task.id === elementId);
+            taskElements[i].style.order = order;
         }
-        pageContent.appendChild(_makeAddTaskButtom());
     }
 
-    const _renderFilledTaskListElement = (taskObject) => {
-        const taskElement = _makeEmptyTaskElement();
-        taskElement.querySelector('.task-container .task-info .title-input input').value = taskObject.title;
-        taskElement.querySelector('.task-container .task-info .checkbox-container input').checked = taskObject.done;
-        taskElement.querySelector('.task-container .task-info .date-display').textContent = taskObject.dueDate;
-
-        // set proper values for every element
-        return taskElement;
+    const _makeTaskElementsArray = (taskList) => {
+        let taskElementsArray = [];
+        for (let i = 0; i < taskList.length; ++i) {
+            const taskElement = _makeFilledTaskElement(taskList[i]);
+            taskElementsArray.push(taskElement);
+        }
+        return taskElementsArray;
     }
 
-    const _makeEmptyTaskElement = () => {
+    const _getTaskElementsArray = () => {
+        return pageContent.childNodes;
+    }
+
+    const _makeFilledTaskElement = (taskObject) => {
+        const taskElementContainer = _makeEmptyTaskElement(taskObject.id);
+        taskElementContainer.querySelector('label input.checkbox').checked = taskObject.done;
+        // title, date, etc.
+        return taskElementContainer;
+    }
+
+    const _makeEmptyTaskElement = (taskId) => {
         const taskElementContainer = document.createElement('div');   
         taskElementContainer.classList.add('task-container');
+        taskElementContainer.id = taskId;
         taskElementContainer.appendChild(_makeTaskShortInfo());
         return taskElementContainer;
     }
@@ -160,12 +178,14 @@ export const DOMTaskListLoader = (() => {
 
     const _makeAddTaskButtom = () => {
         const newTaskContainer = document.createElement('div');
-        newTaskContainer.id = 'new-task';
+        newTaskContainer.id = NEW_TASK_ID;
         newTaskContainer.innerHTML = '<span class="material-icons-outlined font-2em">add</span>';
+        newTaskContainer.style.order = '10000';
         return newTaskContainer;
     }
 
     return {
+        load,
         addTask,
         renderTaskList,
     }
