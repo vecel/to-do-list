@@ -20,6 +20,9 @@ const listItemPrototype = {
     setTitle (title) {
         this.title = title;
     },
+    toggleDoneStatus () {
+        this.done = !this.done;
+    },
     setPriority (priority) {
         this.priority = priority;
     },
@@ -40,4 +43,5 @@ const ListItemFactory = () => {
 export {
     ListFactory,
     ListItemFactory,
+    listItemPrototype,
 }

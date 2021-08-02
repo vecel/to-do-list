@@ -1,6 +1,6 @@
 import './style.css';
 import { DOMMainPageLoader } from './page-loader';
-import { ListFactory, ListItemFactory } from './factories';
+import { ListFactory } from './factories';
 import { LocalStorageManager } from './storage-manager';
 import { URL_ID_PARAMETER_NAME } from './constants';
 
