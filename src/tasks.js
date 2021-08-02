@@ -2,20 +2,22 @@ import './task-style.css';
 import { URL_ID_PARAMETER_NAME } from './constants';
 import { LocalStorageManager } from './storage-manager';
 import { DOMTaskListLoader } from './page-loader';
-import { ListItemFactory } from './factories';
+import { ListItemFactory, listItemPrototype } from './factories';
 
 const listId = getListIdFromUrl();
-const listStorageKey = LocalStorageManager.getTaskListKey(listId);
-let taskList = LocalStorageManager.getTaskListByListId(listId);
+const LIST_STORAGE_KEY = LocalStorageManager.getTaskListKey(listId);
+
+let tempTaskList = LocalStorageManager.getTaskListByListId(listId);
+let taskList = parseToTaskFactoryObjects(tempTaskList);
 
 // sort array - function below
 
-let customTasks = [{title: 'Lorem', done: false, dueDate: '02-08-2021'}, {title: 'Ipsum', done: true}];
-sortTaskList(customTasks);
+// let customTasks = [{title: 'Lorem', done: false, dueDate: '02-08-2021'}, {title: 'Ipsum', done: true}];
+sortTaskList(taskList);
 
 // console.log(customTasks);
 
-DOMTaskListLoader.renderTaskList(customTasks);
+DOMTaskListLoader.renderTaskList(taskList);
 
 const taskCards = document.querySelectorAll('div.task-container');
 const newTaskButton = document.querySelector('div#new-task');
@@ -26,12 +28,38 @@ const addNewTask = () => {
     let task = ListItemFactory();
     taskList.push(task);
     DOMTaskListLoader.addTask();
-    LocalStorageManager.addTask(listStorageKey, task);
+    LocalStorageManager.addTask(LIST_STORAGE_KEY, task);
+    // apply event listeners
 }
 
-for (let i = 0; i < taskCards.length; ++i) {
-    
+const toggleCheckboxValue = (e) => {
+    console.log('toggle checkbox event');
+    const id = getTaskCardIndex(e.target);
+    console.log(id);
+
+    taskList[id].toggleDoneStatus();
+
+    console.log(taskList[id]);
+
+    sortTaskList(taskList);
+    LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
+
+    DOMTaskListLoader.renderTaskList(taskList);
+    // ^ it removes eventListeners
+
+    // console.log(taskList);
+
 }
+
+
+const checkboxList = document.querySelectorAll('label.checkbox-container span');
+for (let i = 0; i < checkboxList.length; ++i) {
+    checkboxList[i].addEventListener('click', toggleCheckboxValue);
+} 
+// for (let i = 0; i < taskCards.length; ++i) {
+//     const checkbox = taskCards[i].querySelector('label.checkbox-container span');
+//     checkbox.addEventListener('click', toggleCheckboxValue);
+// }
 newTaskButton.addEventListener('click', addNewTask);
 
 function getListIdFromUrl() {
@@ -41,15 +69,13 @@ function getListIdFromUrl() {
     return listId;
 }
 
-// function addCustomTask() {
-//     let task = ListItemFactory();
-//     task.title = 'Lorem Ipsum';
-//     task.done = true;
-//     task.dueDate = 'tommorow';
-//     taskList.push(task);
-//     DOMTaskListLoader.addTask();
-//     LocalStorageManager.addTask(listStorageKey, task);
-// }
+function parseToTaskFactoryObjects(taskList) {
+    let parsedArray = [];
+    for (let i = 0; i < taskList.length; ++i) {
+        parsedArray.push(Object.setPrototypeOf(taskList[i], listItemPrototype));
+    }
+    return parsedArray;
+}
 
 function sortTaskList(taskList) {
     taskList.sort((taskA, taskB) => {
@@ -63,4 +89,14 @@ function sortTaskList(taskList) {
         if (taskA.priority > taskB.priority) return -1;
         return 0;
     })
+}
+
+function getTaskCardIndex(element) {
+    const taskCards = Array.from(document.querySelectorAll('div.task-container')); 
+    let temporaryElement = element;
+    while (!taskCards.includes(temporaryElement)) {
+        temporaryElement = temporaryElement.parentNode;
+    }
+    const parent = temporaryElement.parentNode;
+    return Array.prototype.indexOf.call(parent.children, temporaryElement);
 }
