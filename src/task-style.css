@@ -10,6 +10,12 @@ main {
     align-items: center;
 }
 
+ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .checkbox-container input[type="checkbox"] {
     position: absolute;
     opacity: 0;
