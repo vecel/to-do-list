@@ -29,9 +29,9 @@ const addNewTask = () => {
     LocalStorageManager.addTask(listStorageKey, task);
 }
 
-// for (let taskCard of taskCards) {
-//     const 
-// }
+for (let i = 0; i < taskCards.length; ++i) {
+    
+}
 newTaskButton.addEventListener('click', addNewTask);
 
 function getListIdFromUrl() {

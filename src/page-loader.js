@@ -72,30 +72,30 @@ export const DOMMainPageLoader = (() => {
 
 export const DOMTaskListLoader = (() => {
     const pageContent = document.querySelector('main');
-    
-    const load = (listId) => {
-        // const taskList = LocalStorageManager.getTaskListByListId(listId);
-        pageContent.appendChildren(_loadTaskListElements(listId));
-        pageContent.appendChild(_makeAddTaskButtom());
-    }
 
     const addTask = () => {
         const newTaskButton = document.querySelector('div#new-task');
         pageContent.insertBefore(_makeEmptyTaskElement(), newTaskButton);
     }
 
-    const _loadTaskListElements = (listId) => {
-        const taskList = LocalStorageManager.getTaskListByListId(listId);
-        let taskElements = [];
+    const renderTaskList = (taskList) => {
+        // const addTaskButton = pageContent.querySelector('div#new-task');
+        pageContent.innerHTML = ''; // remove children
         for (let i = 0; i < taskList.length; ++i) {
-            taskElements.push(_makeFilledTaskElement(taskList[i]));
+            const element = _renderFilledTaskListElement(taskList[i]);
+            // pageContent.insertBefore(element, addTaskButton);
+            pageContent.appendChild(element);
         }
-        return taskElements;
+        pageContent.appendChild(_makeAddTaskButtom());
     }
 
-    const _makeFilledTaskElement = (taskObject) => {
+    const _renderFilledTaskListElement = (taskObject) => {
         const taskElement = _makeEmptyTaskElement();
         taskElement.querySelector('.task-container .task-info .title-input input').value = taskObject.title;
+        taskElement.querySelector('.task-container .task-info .checkbox-container input').checked = taskObject.done;
+        taskElement.querySelector('.task-container .task-info .date-display').textContent = taskObject.dueDate;
+
+        // set proper values for every element
         return taskElement;
     }
 
@@ -108,7 +108,6 @@ export const DOMTaskListLoader = (() => {
 
     const _makeTaskShortInfo = () => {
         const shortInfoContainer = document.createElement('div');
-        // shortInfoContainer.classList.add('task-container');
         shortInfoContainer.classList.add('task-info');
         // append children: checkbox, title input, dateDiv, burgerButton
         shortInfoContainer.appendChild(_makeCheckbox());
@@ -169,7 +168,7 @@ export const DOMTaskListLoader = (() => {
     }
 
     return {
-        load,
         addTask,
+        renderTaskList,
     }
 })();
