@@ -31,8 +31,9 @@ const listItemPrototype = {
     },
 }
 
-const ListItemFactory = () => {
+const ListItemFactory = (listKey) => {
     let object = Object.create(listItemPrototype);
+    object.id = LocalStorageManager.getCreatedTaskNumber(listKey);
     object.title = '';
     object.done = false;
     object.priority = 0;
