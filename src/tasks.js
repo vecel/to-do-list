@@ -10,13 +10,12 @@ const LIST_STORAGE_KEY = LocalStorageManager.getTaskListKey(listId);
 let tempTaskList = LocalStorageManager.getTaskListByListId(listId);
 let taskList = parseToTaskFactoryObjects(tempTaskList);
 
-// sort array - function below
+// taskList[0].title = 'Lorem';
+// taskList[1].title = 'Ipsum';
 
-// let customTasks = [{title: 'Lorem', done: false, dueDate: '02-08-2021'}, {title: 'Ipsum', done: true}];
 sortTaskList(taskList);
 
-// console.log(customTasks);
-
+DOMTaskListLoader.load(taskList);
 DOMTaskListLoader.renderTaskList(taskList);
 
 const taskCards = document.querySelectorAll('div.task-container');
@@ -25,30 +24,26 @@ const newTaskButton = document.querySelector('div#new-task');
 
 
 const addNewTask = () => {
-    let task = ListItemFactory();
+    let task = ListItemFactory(LIST_STORAGE_KEY);
     taskList.push(task);
-    DOMTaskListLoader.addTask();
+    LocalStorageManager.incrementCreatedTaskNumber(LIST_STORAGE_KEY);
     LocalStorageManager.addTask(LIST_STORAGE_KEY, task);
+    DOMTaskListLoader.addTask(task.id);
     // apply event listeners
 }
 
 const toggleCheckboxValue = (e) => {
     console.log('toggle checkbox event');
-    const id = getTaskCardIndex(e.target);
-    console.log(id);
+    const index = getTaskIndexCorrespondingToElement(e.target);
+    // console.log(id);
+    // console.log(taskList[id])
 
-    taskList[id].toggleDoneStatus();
-
-    console.log(taskList[id]);
+    taskList[index].toggleDoneStatus();
 
     sortTaskList(taskList);
     LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
 
     DOMTaskListLoader.renderTaskList(taskList);
-    // ^ it removes eventListeners
-
-    // console.log(taskList);
-
 }
 
 
@@ -91,12 +86,18 @@ function sortTaskList(taskList) {
     })
 }
 
-function getTaskCardIndex(element) {
+function getTaskId(element) {
     const taskCards = Array.from(document.querySelectorAll('div.task-container')); 
     let temporaryElement = element;
     while (!taskCards.includes(temporaryElement)) {
         temporaryElement = temporaryElement.parentNode;
     }
-    const parent = temporaryElement.parentNode;
-    return Array.prototype.indexOf.call(parent.children, temporaryElement);
+    const id = parseInt(temporaryElement.id);
+    return id;
+}
+
+function getTaskIndexCorrespondingToElement(element) {
+    const elementId = getTaskId(e.target);
+    const index = taskList.findIndex(task => task.id === elementId);
+    return index;
 }

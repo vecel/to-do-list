@@ -73,22 +73,28 @@ export const DOMMainPageLoader = (() => {
 export const DOMTaskListLoader = (() => {
     const NEW_TASK_ID = 'new-task';
     const pageContent = document.querySelector('main');
+    const taskUnorderedList = document.querySelector('ul#task-list');
 
     const load = (taskList) => {
         pageContent.appendChild(_makeAddTaskButtom());
-        pageContent.appendChildren(_makeTaskElementsArray(taskList));
+        taskUnorderedList.appendChildren(_makeTaskElementsArray(taskList));
     }
 
     const addTask = (taskId) => {
-        const newTaskButton = document.querySelector(`div#${NEW_TASK_ID}`);
-        pageContent.insertBefore(_makeEmptyTaskElement(taskId), newTaskButton);
+        // const newTaskButton = document.querySelector(`div#${NEW_TASK_ID}`);
+        // pageContent.insertBefore(_makeEmptyTaskElement(taskId), newTaskButton);
+        taskUnorderedList.appendChild(_makeEmptyTaskElement(taskId));
     }
 
     const renderTaskList = (taskList) => {
         let taskElements = _getTaskElementsArray();
+        console.log(taskList);
+        console.log(taskElements);
+
         for (let i = 0; i < taskElements.length; ++i) {
-            const elementId = parseInt(taskElements[i].id);
             if (taskElements[i].id === NEW_TASK_ID) continue;
+
+            const elementId = parseInt(taskElements[i].id);
             const order = taskList.findIndex(task => task.id === elementId);
             taskElements[i].style.order = order;
         }
@@ -104,12 +110,14 @@ export const DOMTaskListLoader = (() => {
     }
 
     const _getTaskElementsArray = () => {
-        return pageContent.childNodes;
+        return taskUnorderedList.childNodes;
     }
 
     const _makeFilledTaskElement = (taskObject) => {
         const taskElementContainer = _makeEmptyTaskElement(taskObject.id);
-        taskElementContainer.querySelector('label input.checkbox').checked = taskObject.done;
+        taskElementContainer.querySelector('.task-info label input.checkbox').checked = taskObject.done;
+        taskElementContainer.querySelector('.task-info label.title-input input').value = taskObject.title;
+        taskElementContainer.querySelector('.task-info div.date-display').textContent = taskObject.dueDate;
         // title, date, etc.
         return taskElementContainer;
     }
@@ -180,7 +188,6 @@ export const DOMTaskListLoader = (() => {
         const newTaskContainer = document.createElement('div');
         newTaskContainer.id = NEW_TASK_ID;
         newTaskContainer.innerHTML = '<span class="material-icons-outlined font-2em">add</span>';
-        newTaskContainer.style.order = '10000';
         return newTaskContainer;
     }
 
