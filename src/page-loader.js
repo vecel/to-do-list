@@ -22,20 +22,30 @@ export const DOMMainPageLoader = (() => {
         return newList;
     }
 
+    const getMainElement = () => {
+        return pageContent;
+    }
+
     const _makeListCard = (title) => {
         const container = document.createElement('div');
         container.classList.add('task-list');
         container.classList.add('list-card');
-        container.appendChild(_addTitleSpan(title));
+        container.appendChild(_addTitleContainer(title));
         container.appendChild(_addHorizontalLineSeparator());
         return container;
     }
 
-    const _addTitleSpan = (title) => {
-        const titleSpan = document.createElement('span')
-        titleSpan.classList.add('list-title');
-        titleSpan.textContent = title;
-        return titleSpan;
+    const _addTitleContainer = (title) => {
+        const titleLabel = document.createElement('label')
+        // titleLabel.classList.add('list-title');
+        // titleLabel.textContent = title;
+
+        const titleInput = document.createElement('input');
+        titleInput.value = title;
+        titleInput.classList.add('list-title');
+
+        titleLabel.appendChild(titleInput);
+        return titleLabel;
     }
 
     const _addHorizontalLineSeparator = () => {
@@ -67,6 +77,7 @@ export const DOMMainPageLoader = (() => {
     return {
         load,
         pushNewListCard,
+        getMainElement,
     }
 })();
 
