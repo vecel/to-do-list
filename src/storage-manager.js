@@ -1,6 +1,7 @@
 import { STORAGE_LISTS_KEY } from "./constants"
 
 const CREATED_LISTS_NUMBER_KEY = 'createdListsNumber';
+const CREATED_TASKS_NUMBER_KEY = 'createdTasks';
 
 export const LocalStorageManager = (() => {
     const initLists = () => {
@@ -35,6 +36,17 @@ export const LocalStorageManager = (() => {
 
     const initTaskList = (listKey) => {
         localStorage.setItem(listKey, JSON.stringify([]));
+        localStorage.setItem(CREATED_TASKS_NUMBER_KEY + listKey, JSON.stringify(0));
+    }
+
+    const getCreatedTaskNumber = (listKey) => {
+        return JSON.parse(localStorage.getItem(CREATED_TASKS_NUMBER_KEY + listKey));
+    }
+
+    const incrementCreatedTaskNumber = (listKey) => {
+        let createdTaskNumber = JSON.parse(localStorage.getItem(CREATED_TASKS_NUMBER_KEY + listKey));
+        createdTaskNumber++;
+        localStorage.setItem(CREATED_TASKS_NUMBER_KEY + listKey, JSON.stringify(createdTaskNumber));
     }
 
     const getTaskListByKey = (listKey) => {
@@ -70,6 +82,8 @@ export const LocalStorageManager = (() => {
         getCreatedListsNumber,
         incrementCreatedListsNumber,
         initTaskList,
+        getCreatedTaskNumber,
+        incrementCreatedTaskNumber,
         getTaskListByKey,
         getTaskListByListId,
         addTask,
