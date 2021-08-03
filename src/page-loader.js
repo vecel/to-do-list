@@ -88,9 +88,6 @@ export const DOMTaskListLoader = (() => {
 
     const renderTaskList = (taskList) => {
         let taskElements = _getTaskElementsArray();
-        console.log(taskList);
-        console.log(taskElements);
-
         for (let i = 0; i < taskElements.length; ++i) {
             if (taskElements[i].id === NEW_TASK_ID) continue;
 
@@ -191,9 +188,14 @@ export const DOMTaskListLoader = (() => {
         return newTaskContainer;
     }
 
+    const getElementTitle = (element) => {
+        return element.value;
+    }
+
     return {
         load,
         addTask,
         renderTaskList,
+        getElementTitle,
     }
 })();

@@ -30,31 +30,34 @@ const addNewTask = () => {
     LocalStorageManager.addTask(LIST_STORAGE_KEY, task);
     DOMTaskListLoader.addTask(task.id);
     // apply event listeners
+    // find task element by div#taskId
 }
 
 const toggleCheckboxValue = (e) => {
     console.log('toggle checkbox event');
     const index = getTaskIndexCorrespondingToElement(e.target);
-    // console.log(id);
-    // console.log(taskList[id])
-
     taskList[index].toggleDoneStatus();
-
     sortTaskList(taskList);
     LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
-
     DOMTaskListLoader.renderTaskList(taskList);
 }
 
+const changeTitle = (e) => {
+    const title = DOMTaskListLoader.getElementTitle(e.target);
+    const id = getTaskIndexCorrespondingToElement(e.target);
+    taskList[id].setTitle(e.target.value);
+    LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
+}
 
-const checkboxList = document.querySelectorAll('label.checkbox-container span');
-for (let i = 0; i < checkboxList.length; ++i) {
-    checkboxList[i].addEventListener('click', toggleCheckboxValue);
-} 
-// for (let i = 0; i < taskCards.length; ++i) {
-//     const checkbox = taskCards[i].querySelector('label.checkbox-container span');
-//     checkbox.addEventListener('click', toggleCheckboxValue);
-// }
+
+
+for (let i = 0; i < taskCards.length; ++i) {
+    const checkbox = taskCards[i].querySelector('.task-info label.checkbox-container span');
+    const titleDisplay = taskCards[i].querySelector('.task-info label.title-input input');
+    
+    checkbox.addEventListener('click', toggleCheckboxValue);
+    titleDisplay.addEventListener('focusout', changeTitle);
+}
 newTaskButton.addEventListener('click', addNewTask);
 
 function getListIdFromUrl() {
@@ -97,7 +100,7 @@ function getTaskId(element) {
 }
 
 function getTaskIndexCorrespondingToElement(element) {
-    const elementId = getTaskId(e.target);
+    const elementId = getTaskId(element);
     const index = taskList.findIndex(task => task.id === elementId);
     return index;
 }
