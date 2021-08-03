@@ -8,6 +8,16 @@ main {
     display: flex;
 }
 
+label {
+    width: 90%;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+}
+
 .material-icons-outlined {
     user-select: none;
 }
@@ -25,6 +35,7 @@ main {
 .list-title {
     font-size: 1.1em;
     margin: 6px 0;
+    width: 100%;
 }
 
 .horizontal-line {
