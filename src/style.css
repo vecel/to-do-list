@@ -32,6 +32,10 @@ input {
     font-size: 4em;
 }
 
+.font-2em {
+    font-size: 2em;
+}
+
 .list-title {
     font-size: 1.1em;
     margin: 6px 0;
@@ -42,6 +46,13 @@ input {
     width: 90%;
     height: 2px;
     background-color: black;
+}
+
+.delete-list {
+    align-self: flex-start;
+    width: 32px;
+    height: 32px;
+    margin: auto 0 12px 12px;
 }
 
 div.task-list {

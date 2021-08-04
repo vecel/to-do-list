@@ -26,19 +26,22 @@ export const DOMMainPageLoader = (() => {
         return pageContent;
     }
 
+    const deleteListCard = (listId) => {
+        pageContent.childNodes[listId].remove();
+    }
+
     const _makeListCard = (title) => {
         const container = document.createElement('div');
         container.classList.add('task-list');
         container.classList.add('list-card');
         container.appendChild(_addTitleContainer(title));
         container.appendChild(_addHorizontalLineSeparator());
+        container.appendChild(_addDeleteListSpan());
         return container;
     }
 
     const _addTitleContainer = (title) => {
         const titleLabel = document.createElement('label')
-        // titleLabel.classList.add('list-title');
-        // titleLabel.textContent = title;
 
         const titleInput = document.createElement('input');
         titleInput.value = title;
@@ -52,6 +55,14 @@ export const DOMMainPageLoader = (() => {
         const line = document.createElement('div');
         line.classList.add('horizontal-line');
         return line;
+    }
+
+    const _addDeleteListSpan = () => {
+        const deleteContainer = document.createElement('div');
+        deleteContainer.classList.add('delete-list');
+        deleteContainer.classList.add('center-content');
+        deleteContainer.innerHTML = `<span class="material-icons-outlined font-2em">delete</span>`;
+        return deleteContainer;
     }
 
     const _getListElementsArray = () => {
@@ -78,6 +89,7 @@ export const DOMMainPageLoader = (() => {
         load,
         pushNewListCard,
         getMainElement,
+        deleteListCard,
     }
 })();
 
