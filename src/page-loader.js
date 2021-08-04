@@ -104,9 +104,9 @@ export const DOMTaskListLoader = (() => {
     }
 
     const addTask = (taskId) => {
-        // const newTaskButton = document.querySelector(`div#${NEW_TASK_ID}`);
-        // pageContent.insertBefore(_makeEmptyTaskElement(taskId), newTaskButton);
-        taskUnorderedList.appendChild(_makeEmptyTaskElement(taskId));
+        let taskElement = _makeEmptyTaskElement(taskId);
+        taskUnorderedList.appendChild(taskElement);
+        return taskElement;
     }
 
     const renderTaskList = (taskList) => {

@@ -10,9 +10,6 @@ const LIST_STORAGE_KEY = LocalStorageManager.getTaskListKey(listId);
 let tempTaskList = LocalStorageManager.getTaskListByListId(listId);
 let taskList = parseToTaskFactoryObjects(tempTaskList);
 
-// taskList[0].title = 'Lorem';
-// taskList[1].title = 'Ipsum';
-
 sortTaskList(taskList);
 
 DOMTaskListLoader.load(taskList);
@@ -28,9 +25,8 @@ const addNewTask = () => {
     taskList.push(task);
     LocalStorageManager.incrementCreatedTaskNumber(LIST_STORAGE_KEY);
     LocalStorageManager.addTask(LIST_STORAGE_KEY, task);
-    DOMTaskListLoader.addTask(task.id);
-    // apply event listeners
-    // find task element by div#taskId
+    let taskElement = DOMTaskListLoader.addTask(task.id);
+    applyEventListeners(taskElement);
 }
 
 const toggleCheckboxValue = (e) => {
@@ -52,13 +48,21 @@ const changeTitle = (e) => {
 
 
 for (let i = 0; i < taskCards.length; ++i) {
-    const checkbox = taskCards[i].querySelector('.task-info label.checkbox-container span');
-    const titleDisplay = taskCards[i].querySelector('.task-info label.title-input input');
+    applyEventListeners(taskCards[i]);
+}
+newTaskButton.addEventListener('click', addNewTask);
+
+
+
+function applyEventListeners(taskElement) {
+    const checkbox = taskElement.querySelector('.task-info label.checkbox-container span');
+    const titleDisplay = taskElement.querySelector('.task-info label.title-input input');
+    const detailsButton = taskElement.querySelector('button.details-button');
     
     checkbox.addEventListener('click', toggleCheckboxValue);
     titleDisplay.addEventListener('focusout', changeTitle);
+    detailsButton.addEventListener('click', () => { console.log('details') });
 }
-newTaskButton.addEventListener('click', addNewTask);
 
 function getListIdFromUrl() {
     const queryString = window.location.search;
