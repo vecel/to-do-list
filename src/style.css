@@ -1,11 +1,19 @@
+:root {
+    --primary-color: rgb(180, 180, 180);
+    --secondary-color: rgb(220, 220, 220);
+}
+
 html, body {
     min-height: 100vh;
     height: 100%;
     margin: 0;
+    background-color: rgb(26, 26, 26);
 }
 
 main {
     display: flex;
+    flex-wrap: wrap;
+    color: var(--primary-color);
 }
 
 label {
@@ -39,20 +47,35 @@ input {
 .list-title {
     font-size: 1.1em;
     margin: 6px 0;
-    width: 100%;
+    width: 90%;
+    color: var(--secondary-color);
+}
+
+.list-title:focus {
+    outline: rgb(150, 150, 150) solid 1px;
 }
 
 .horizontal-line {
     width: 90%;
     height: 2px;
-    background-color: black;
+    background-color: var(--primary-color);
 }
 
 .delete-list {
     align-self: flex-start;
-    width: 32px;
-    height: 32px;
     margin: auto 0 12px 12px;
+    color: rgb(241, 38, 38);
+}
+
+.delete-action-info {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgb(241, 38, 38);
+    display: inline-block;
+    font-size: 1.3m;
+}
+
+div.delete-list:hover > span {
+    color: rgb(247, 105, 105);
 }
 
 div.task-list {
@@ -62,7 +85,8 @@ div.task-list {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 2px solid black;
+    border: 1px solid var(--primary-color);
+    background-color: rgb(40, 40, 40);
     border-radius: 24px;
     cursor: pointer;
 }

@@ -42,6 +42,7 @@ export const DOMMainPageLoader = (() => {
 
     const _addTitleContainer = (title) => {
         const titleLabel = document.createElement('label')
+        titleLabel.classList.add('center-content');
 
         const titleInput = document.createElement('input');
         titleInput.value = title;
@@ -61,7 +62,7 @@ export const DOMMainPageLoader = (() => {
         const deleteContainer = document.createElement('div');
         deleteContainer.classList.add('delete-list');
         deleteContainer.classList.add('center-content');
-        deleteContainer.innerHTML = `<span class="material-icons-outlined font-2em">delete</span>`;
+        deleteContainer.innerHTML = `<span class="material-icons-outlined font-2em">delete</span><span class="delete-action-info">DELETE</span>`;
         return deleteContainer;
     }
 
