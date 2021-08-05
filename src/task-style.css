@@ -16,6 +16,21 @@ ul {
     align-items: center;
 }
 
+textarea {
+    resize: none;
+    padding: 2px;
+    margin: 4px 8px;
+    border: none;
+    background-color: #888;
+    flex-grow: 1;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .checkbox-container input[type="checkbox"] {
     position: absolute;
     opacity: 0;
@@ -25,7 +40,6 @@ ul {
 }
 
 label.checkbox-container {
-    display: block;
     margin: 0 12px;
 }
 
@@ -92,9 +106,8 @@ input[type="text"] {
     display: grid;
     grid-template-columns: 44px 1fr 112px 48px;
     height: 48px;
-    width: 700px;
+    /* width: 700px; */
     background-color: #777;
-    margin: 6px 0;
     border-left: 12px solid red;
 }
 
@@ -104,13 +117,83 @@ button.details-button {
     height: 32px;
     width: 32px;
     cursor: pointer;
-    margin: 6px;
+    margin: 8px;
+    padding: 0;
 }
 
-.task-info label, div, button {
+.task-container {
+    width: 820px;
+    margin: 8px 0;
+    flex-direction: column;
+}
+
+div.details {
+    width: 100%;
+    height: 240px;
+    background-color: #999;
     display: flex;
-    justify-content: center;
+    align-items: stretch;
+}
+
+div.details > * {
+    flex-grow: 1;
+    width: 50%;
+}
+
+.description {
+    display: flex;
+    align-items: stretch;
+}
+
+.task-data-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-data-container section {
+    height: 96px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.details-section > * {
+    height: 50%;
+}
+
+div.section-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+}
+
+div.section-title span {
+    margin-left: 12px;
+    font-size: 1.1em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.priority-preview {
+    width: 70px;
+    margin: 4px 6px;
+    padding: 8px;
+    background-color: beige;
+}
+
+.details-section ul {
+    flex-direction: row;
+    align-items: normal;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+}
+
+.details-section ul li {
+    width: 80px;
+    text-align: center;
+}
+
+.details-section ul li:hover {
+    background-color: #555;
 }
 
 #new-task {

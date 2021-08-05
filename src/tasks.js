@@ -45,6 +45,10 @@ const changeTitle = (e) => {
     LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
 }
 
+const showTaskDetails = () => {
+    
+}
+
 
 
 for (let i = 0; i < taskCards.length; ++i) {
@@ -61,7 +65,7 @@ function applyEventListeners(taskElement) {
     
     checkbox.addEventListener('click', toggleCheckboxValue);
     titleDisplay.addEventListener('focusout', changeTitle);
-    detailsButton.addEventListener('click', () => { console.log('details') });
+    detailsButton.addEventListener('click', showTaskDetails);
 }
 
 function getListIdFromUrl() {

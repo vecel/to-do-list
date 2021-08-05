@@ -148,13 +148,13 @@ export const DOMTaskListLoader = (() => {
         taskElementContainer.classList.add('task-container');
         taskElementContainer.id = taskId;
         taskElementContainer.appendChild(_makeTaskShortInfo());
+        taskElementContainer.appendChild(_makeDetailsContainer());
         return taskElementContainer;
     }
 
     const _makeTaskShortInfo = () => {
         const shortInfoContainer = document.createElement('div');
         shortInfoContainer.classList.add('task-info');
-        // append children: checkbox, title input, dateDiv, burgerButton
         shortInfoContainer.appendChild(_makeCheckbox());
         shortInfoContainer.appendChild(_makeTitleInput());
         shortInfoContainer.appendChild(_makeDateDisplay());
@@ -165,6 +165,7 @@ export const DOMTaskListLoader = (() => {
     const _makeCheckbox = () => {
         const checkboxWrapper = document.createElement('label');
         checkboxWrapper.classList.add('checkbox-container');
+        checkboxWrapper.classList.add('center-content');
 
         const checkbox = document.createElement('input');
         checkbox.classList.add('checkbox');
@@ -182,6 +183,7 @@ export const DOMTaskListLoader = (() => {
     const _makeTitleInput = () => {
         const titleWrapper = document.createElement('label');
         titleWrapper.classList.add('title-input');
+        titleWrapper.classList.add('center-content');
 
         const titleInput = document.createElement('input');
         titleInput.type = 'text';
@@ -194,6 +196,7 @@ export const DOMTaskListLoader = (() => {
     const _makeDateDisplay = () => {
         const dateDisplay = document.createElement('div');
         dateDisplay.classList.add('date-display');
+        dateDisplay.classList.add('center-content');
         dateDisplay.textContent = '';
         return dateDisplay;
     }
@@ -201,8 +204,67 @@ export const DOMTaskListLoader = (() => {
     const _makeDetailsButton = () => {
         const button = document.createElement('button');
         button.classList.add('details-button');
+        button.classList.add('center-content');
         button.innerHTML = '<span class="material-icons-outlined">menu</span>';
         return button;
+    }
+
+    const _makeDetailsContainer = () => {
+        const detailsContainer = document.createElement('div');
+        detailsContainer.classList.add('details');
+
+        detailsContainer.appendChild(_makeDescriptionField());
+        detailsContainer.appendChild(_makePriorityAndDateContainer());
+
+        return detailsContainer;
+    }
+
+    const _makeDescriptionField = () => {
+        const textAreaWrapper = document.createElement('label');
+        textAreaWrapper.classList.add('center-content');
+        textAreaWrapper.classList.add('description');
+        
+        const textArea = document.createElement('textarea');
+        textArea.name = 'task-description';
+        textAreaWrapper.appendChild(textArea);
+
+        return textAreaWrapper;
+    }
+
+    const _makePriorityAndDateContainer = () => {
+        const container = document.createElement('div');
+        container.classList.add('task-data-container');
+
+        container.appendChild(_makePrioritySection());
+
+        return container;
+    }
+
+    const _makePrioritySection = () => {
+        const section = document.createElement('section');
+        section.classList.add('details-section');
+
+        const sectionTitleContainer = document.createElement('div');
+        sectionTitleContainer.classList.add('section-title');
+        sectionTitleContainer.innerHTML = `<span>Priority</span><div class="priority-preview">-1</div>`;
+
+        const prioritySelection = document.createElement('ul');
+        prioritySelection.appendChild(_makePriorityListItem('None', 0));
+        prioritySelection.appendChild(_makePriorityListItem('Low', 10));
+        prioritySelection.appendChild(_makePriorityListItem('Medium', 50));
+        prioritySelection.appendChild(_makePriorityListItem('High', 100));
+
+        section.appendChild(sectionTitleContainer);
+        section.appendChild(prioritySelection);
+
+        return section;
+    }
+
+    const _makePriorityListItem = (title, priority) => {
+        const li = document.createElement('li');
+        li.classList.add('center-content');
+        li.innerHTML = `<span>${title} <br>(${priority})</span>`;
+        return li;
     }
 
     const _makeAddTaskButtom = () => {
