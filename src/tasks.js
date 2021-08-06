@@ -45,8 +45,14 @@ const changeTitle = (e) => {
     LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
 }
 
-const showTaskDetails = () => {
+const showTaskDetails = (e) => {
+    console.log('show details');
+    // console.log(e.target);
+    console.log(getTaskIndexCorrespondingToElement(e.target));
     
+    const taskIndex = getTaskIndexCorrespondingToElement(e.target);
+    DOMTaskListLoader.toggleTaskDetailsDisplay(taskIndex);
+    // console.log(getTaskId(e.target));
 }
 
 
@@ -99,6 +105,7 @@ function sortTaskList(taskList) {
 
 function getTaskId(element) {
     const taskCards = Array.from(document.querySelectorAll('div.task-container')); 
+    // console.log(taskCards);
     let temporaryElement = element;
     while (!taskCards.includes(temporaryElement)) {
         temporaryElement = temporaryElement.parentNode;

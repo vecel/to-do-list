@@ -106,6 +106,7 @@ export const DOMTaskListLoader = (() => {
 
     const addTask = (taskId) => {
         let taskElement = _makeEmptyTaskElement(taskId);
+        taskElement.style.order = '-1';
         taskUnorderedList.appendChild(taskElement);
         return taskElement;
     }
@@ -119,6 +120,12 @@ export const DOMTaskListLoader = (() => {
             const order = taskList.findIndex(task => task.id === elementId);
             taskElements[i].style.order = order;
         }
+    }
+
+    const toggleTaskDetailsDisplay = (elementIndex) => {
+        let taskElements = _getTaskElementsArray();
+        console.log(taskElements[elementIndex]);
+        taskElements[elementIndex].appendChild(_makeDetailsContainer());
     }
 
     const _makeTaskElementsArray = (taskList) => {
@@ -148,7 +155,6 @@ export const DOMTaskListLoader = (() => {
         taskElementContainer.classList.add('task-container');
         taskElementContainer.id = taskId;
         taskElementContainer.appendChild(_makeTaskShortInfo());
-        taskElementContainer.appendChild(_makeDetailsContainer());
         return taskElementContainer;
     }
 
@@ -283,5 +289,6 @@ export const DOMTaskListLoader = (() => {
         addTask,
         renderTaskList,
         getElementTitle,
+        toggleTaskDetailsDisplay,
     }
 })();
