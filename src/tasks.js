@@ -26,6 +26,7 @@ const addNewTask = () => {
     LocalStorageManager.incrementCreatedTaskNumber(LIST_STORAGE_KEY);
     LocalStorageManager.addTask(LIST_STORAGE_KEY, task);
     let taskElement = DOMTaskListLoader.addTask(task.id);
+    // console.log(taskElement);
     applyEventListeners(taskElement);
 }
 
@@ -33,6 +34,16 @@ const toggleCheckboxValue = (e) => {
     console.log('toggle checkbox event');
     const index = getTaskIndexCorrespondingToElement(e.target);
     taskList[index].toggleDoneStatus();
+    sortTaskList(taskList);
+    LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
+    DOMTaskListLoader.renderTaskList(taskList);
+}
+
+const changePriority = (e) => {
+    console.log(e.target);
+    const priority = getPriorityFromList(e.target);       
+    const index = getTaskIndexCorrespondingToElement(e.target);
+    taskList[index].setPriority(priority);
     sortTaskList(taskList);
     LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
     DOMTaskListLoader.renderTaskList(taskList);
@@ -46,13 +57,14 @@ const changeTitle = (e) => {
 }
 
 const showTaskDetails = (e) => {
-    console.log('show details');
-    // console.log(e.target);
-    console.log(getTaskId(e.target));
-    
+    console.log('show details');    
     const taskIndex = getTaskId(e.target);
-    DOMTaskListLoader.toggleTaskDetailsDisplay(taskIndex);
-    // console.log(getTaskId(e.target));
+    const taskId = taskList.findIndex(task => task.id === parseInt(taskIndex));
+    const taskObject = taskList[taskId];
+    
+    const details = DOMTaskListLoader.toggleTaskDetailsDisplay(taskIndex, taskObject);
+    if (details !== undefined)
+        applyDetailsBoxEventListeners(details);
 }
 
 
@@ -72,6 +84,14 @@ function applyEventListeners(taskElement) {
     checkbox.addEventListener('click', toggleCheckboxValue);
     titleDisplay.addEventListener('focusout', changeTitle);
     detailsButton.addEventListener('click', showTaskDetails);
+}
+
+function applyDetailsBoxEventListeners(detailsElement) {
+    const priorityList = detailsElement.querySelector('ul.priority');
+    
+    
+    
+    priorityList.addEventListener('click', changePriority);
 }
 
 function getListIdFromUrl() {
@@ -118,4 +138,25 @@ function getTaskIndexCorrespondingToElement(element) {
     const elementId = getTaskId(element);
     const index = taskList.findIndex(task => task.id === elementId);
     return index;
+}
+
+function getPriorityFromList(element) {
+    while (element.tagName !== 'LI') element = element.parentNode;
+    const priority = extractPriorityFromClassList(element.classList);
+    updatePriorityPreview(element, priority);
+    element.parentNode.parentNode.querySelector('.priority-preview').textContent = priority;
+    return priority;
+}
+
+function extractPriorityFromClassList(classList) {
+    for (let i = 0; i < classList.length; ++i) {
+        const priority = parseInt(classList[i]);
+        if (!Number.isNaN(priority)) return priority;
+    }
+    return -1;
+}
+
+function updatePriorityPreview(element, priority) {
+    while (!element.classList.contains('details-section')) element = element.parentNode;
+    element.querySelector('.priority-preview').textContent = priority;
 }

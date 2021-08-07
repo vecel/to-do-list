@@ -122,7 +122,7 @@ export const DOMTaskListLoader = (() => {
         }
     }
 
-    const toggleTaskDetailsDisplay = (elementId) => {
+    const toggleTaskDetailsDisplay = (elementId, taskObject) => {
         let taskElements = Array.from(_getTaskElementsArray());
         const index = taskElements.findIndex(element => parseInt(element.id) === elementId);
         const currentElement = taskElements[index];
@@ -133,9 +133,15 @@ export const DOMTaskListLoader = (() => {
             return;
         }
         if (!hasDetails) {
-            taskElements[index].appendChild(_makeDetailsContainer());
-            return;
+            const details = _makeDetailsContainer();
+            _fillDetailsContainer(details, taskObject);
+            return taskElements[index].appendChild(details);
         }
+    }
+
+    const _fillDetailsContainer = (details, taskObject) => {
+        const priorityPreview = details.querySelector('div.priority-preview');
+        priorityPreview.textContent = taskObject.priority;
     }
 
     const _makeTaskElementsArray = (taskList) => {
@@ -265,6 +271,7 @@ export const DOMTaskListLoader = (() => {
         sectionTitleContainer.innerHTML = `<span>Priority</span><div class="priority-preview">-1</div>`;
 
         const prioritySelection = document.createElement('ul');
+        prioritySelection.classList.add('priority');
         prioritySelection.appendChild(_makePriorityListItem('None', 0));
         prioritySelection.appendChild(_makePriorityListItem('Low', 10));
         prioritySelection.appendChild(_makePriorityListItem('Medium', 50));
@@ -279,6 +286,7 @@ export const DOMTaskListLoader = (() => {
     const _makePriorityListItem = (title, priority) => {
         const li = document.createElement('li');
         li.classList.add('center-content');
+        li.classList.add(priority);
         li.innerHTML = `<span>${title} <br>(${priority})</span>`;
         return li;
     }
