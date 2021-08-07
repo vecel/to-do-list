@@ -122,10 +122,20 @@ export const DOMTaskListLoader = (() => {
         }
     }
 
-    const toggleTaskDetailsDisplay = (elementIndex) => {
-        let taskElements = _getTaskElementsArray();
-        console.log(taskElements[elementIndex]);
-        taskElements[elementIndex].appendChild(_makeDetailsContainer());
+    const toggleTaskDetailsDisplay = (elementId) => {
+        let taskElements = Array.from(_getTaskElementsArray());
+        const index = taskElements.findIndex(element => parseInt(element.id) === elementId);
+        const currentElement = taskElements[index];
+        const detailsDiv = currentElement.querySelector('div.details');
+        const hasDetails = detailsDiv !== null;
+        if (hasDetails) {
+            currentElement.removeChild(detailsDiv);
+            return;
+        }
+        if (!hasDetails) {
+            taskElements[index].appendChild(_makeDetailsContainer());
+            return;
+        }
     }
 
     const _makeTaskElementsArray = (taskList) => {

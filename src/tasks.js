@@ -48,9 +48,9 @@ const changeTitle = (e) => {
 const showTaskDetails = (e) => {
     console.log('show details');
     // console.log(e.target);
-    console.log(getTaskIndexCorrespondingToElement(e.target));
+    console.log(getTaskId(e.target));
     
-    const taskIndex = getTaskIndexCorrespondingToElement(e.target);
+    const taskIndex = getTaskId(e.target);
     DOMTaskListLoader.toggleTaskDetailsDisplay(taskIndex);
     // console.log(getTaskId(e.target));
 }
