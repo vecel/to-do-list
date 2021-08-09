@@ -1,7 +1,14 @@
+:root {
+    --primary-color: rgb(180, 180, 180);
+    --secondary-color: rgb(220, 220, 220);
+    --default-border: 1px solid var(--primary-color);
+}
+
 html, body {
     min-height: 100vh;
     height: 100%;
     margin: 0;
+    background-color: rgb(26, 26, 26);
 }
 
 main {
@@ -11,6 +18,7 @@ main {
 }
 
 ul {
+    padding-left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +29,8 @@ textarea {
     padding: 2px;
     margin: 4px 8px;
     border: none;
-    background-color: #888;
+    background-color: rgb(40, 40, 40);
+    color: var(--primary-color);
     flex-grow: 1;
 }
 
@@ -50,7 +59,7 @@ label.checkbox-container {
     left: 0;
     width: 18px;
     height: 18px;
-    border: 1px solid black;
+    border: var(--default-border);
     border-radius: 4px;
     cursor: pointer;
 }
@@ -96,6 +105,7 @@ input[type="text"] {
     width: 60%;
     font-size: 1em;
     flex-grow: 1;
+    color: var(--primary-color);
 }
 
 .font-2em {
@@ -106,9 +116,9 @@ input[type="text"] {
     display: grid;
     grid-template-columns: 44px 1fr 112px 48px;
     height: 48px;
-    /* width: 700px; */
-    background-color: #777;
-    border-left: 12px solid red;
+    background-color: rgb(40, 40, 40);
+    border: var(--default-border);
+    /* border-left: 12px solid red; */
 }
 
 button.details-button {
@@ -119,6 +129,7 @@ button.details-button {
     cursor: pointer;
     margin: 8px;
     padding: 0;
+    color: var(--primary-color);
 }
 
 .task-container {
@@ -128,9 +139,12 @@ button.details-button {
 }
 
 div.details {
-    width: 100%;
+    width: 818px;
     height: 240px;
-    background-color: #999;
+    background-color: rgb(50, 50, 50);
+    border: var(--default-border);
+    border-top: none;
+    color: var(--primary-color);
     display: flex;
     align-items: stretch;
 }
@@ -176,7 +190,8 @@ div.section-title span {
     width: 70px;
     margin: 4px 6px;
     padding: 8px;
-    background-color: beige;
+    background-color: var(--secondary-color);
+    color: rgb(26, 26, 26);
 }
 
 .details-section ul {
@@ -197,14 +212,20 @@ div.section-title span {
     background-color: #555;
 }
 
+.date-selection input {
+    padding: 8px;
+    margin-left: 12px;
+}
+
 #new-task {
     height: 48px;
-    width: 700px;
+    width: 820px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    border: 2px solid black;
+    border: var(--default-border);
+    color: var(--primary-color);
     border-radius: 6px;
     cursor: pointer;
 }

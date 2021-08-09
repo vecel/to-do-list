@@ -26,7 +26,6 @@ const addNewTask = () => {
     LocalStorageManager.incrementCreatedTaskNumber(LIST_STORAGE_KEY);
     LocalStorageManager.addTask(LIST_STORAGE_KEY, task);
     let taskElement = DOMTaskListLoader.addTask(task.id);
-    // console.log(taskElement);
     applyEventListeners(taskElement);
 }
 
@@ -40,11 +39,13 @@ const toggleCheckboxValue = (e) => {
 }
 
 const changePriority = (e) => {
-    console.log(e.target);
     const priority = getPriorityFromList(e.target);       
     const index = getTaskIndexCorrespondingToElement(e.target);
+    
+    // to do: execute below code only if SAVE is pressed
     taskList[index].setPriority(priority);
     sortTaskList(taskList);
+
     LocalStorageManager.updateTaskList(LIST_STORAGE_KEY, taskList);
     DOMTaskListLoader.renderTaskList(taskList);
 }
@@ -118,8 +119,8 @@ function sortTaskList(taskList) {
 
         // dates
 
-        if (taskA.priority > taskB.priority) return -1;
-        return 0;
+        if (taskA.priority <= taskB.priority) return 1;
+        return -1;
     })
 }
 

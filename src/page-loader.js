@@ -114,7 +114,7 @@ export const DOMTaskListLoader = (() => {
     const renderTaskList = (taskList) => {
         let taskElements = _getTaskElementsArray();
         for (let i = 0; i < taskElements.length; ++i) {
-            if (taskElements[i].id === NEW_TASK_ID) continue;
+            // if (taskElements[i].id === NEW_TASK_ID) continue;
 
             const elementId = parseInt(taskElements[i].id);
             const order = taskList.findIndex(task => task.id === elementId);
@@ -258,6 +258,7 @@ export const DOMTaskListLoader = (() => {
         container.classList.add('task-data-container');
 
         container.appendChild(_makePrioritySection());
+        // container.appendChild(_makeDueDateSection());
 
         return container;
     }
@@ -276,6 +277,7 @@ export const DOMTaskListLoader = (() => {
         prioritySelection.appendChild(_makePriorityListItem('Low', 10));
         prioritySelection.appendChild(_makePriorityListItem('Medium', 50));
         prioritySelection.appendChild(_makePriorityListItem('High', 100));
+        prioritySelection.appendChild(_makePriorityListItem('Very High', 1000));
 
         section.appendChild(sectionTitleContainer);
         section.appendChild(prioritySelection);
@@ -289,6 +291,37 @@ export const DOMTaskListLoader = (() => {
         li.classList.add(priority);
         li.innerHTML = `<span>${title} <br>(${priority})</span>`;
         return li;
+    }
+
+    const _makeDueDateSection = () => {
+        const dateSection = document.createElement('section');
+        dateSection.classList.add('details-section');
+
+        const sectionTitleContainer = document.createElement('div');
+        sectionTitleContainer.classList.add('section-title');
+        sectionTitleContainer.innerHTML = `<span>Due Date</span><div class="priority-preview">None</div>`;
+
+        dateSection.appendChild(sectionTitleContainer);
+        dateSection.appendChild(_makeDateSelectionInput());
+
+        return dateSection;
+    }
+
+    const _makeDatePredefinedSelection = () => {
+        // to do
+    }
+
+    const _makeDateSelectionInput = () => {
+        const label = document.createElement('label');
+        label.classList.add('date-selection');
+
+        const input = document.createElement('input');
+        input.type = 'date';
+        input.pattern = '\d{4}-\d{2}-d{2}';
+
+        label.appendChild(input);
+
+        return label;
     }
 
     const _makeAddTaskButtom = () => {
