@@ -119,6 +119,12 @@ export const DOMTaskListLoader = (() => {
             const elementId = parseInt(taskElements[i].id);
             const order = taskList.findIndex(task => task.id === elementId);
             taskElements[i].style.order = order;
+
+            const taskPriority = taskList[order].priority;
+            if (taskPriority === 10) taskElements[i].style.borderLeft = '6px solid blue';
+            if (taskPriority === 50) taskElements[i].style.borderLeft = '6px solid green';
+            if (taskPriority === 100) taskElements[i].style.borderLeft = '6px solid orange';
+            if (taskPriority === 1000) taskElements[i].style.borderLeft = '6px solid red';
         }
     }
 
